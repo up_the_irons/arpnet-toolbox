@@ -20,4 +20,12 @@ class MailReader
   def initialize(&settings)
     Mail.defaults(&settings) if block_given?
   end
+
+  def go
+    @all = Mail.all
+    @all.each do |msg|
+      yield msg
+    end
+  end
+end
 end
