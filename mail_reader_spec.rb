@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/mail_monitor'
+require File.dirname(__FILE__) + '/mail_reader'
 
 describe MailReader do
   context "initialization" do
