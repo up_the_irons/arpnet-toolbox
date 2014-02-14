@@ -21,11 +21,12 @@ class MailReader
     Mail.defaults(&settings) if block_given?
   end
 
+  # Retrieve all messages from the mailbox and yield each to a block.
+  # Warning: this can be slow on large mailboxes
   def go
     @all = Mail.all
     @all.each do |msg|
       yield msg
     end
   end
-end
 end
