@@ -1,5 +1,5 @@
-class MailForwarder
-  def initialize
+require 'mail_base'
 
-  end
+# A basic class to forward email.  Uses the Mail gem.
+class MailForwarder < MailBase
 end
