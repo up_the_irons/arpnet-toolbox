@@ -1,5 +1,14 @@
 require 'mail_base'
 
-# A basic class to forward email.  Uses the Mail gem.
-class MailForwarder < MailBase
+class MailForwarderBase < MailBase
+  def initialize(msg, opts = {})
+    @msg = msg
+    @opts = {
+      :subject_prefix => "FW: "
+    }.merge(opts)
+  end
+
+  def subject(s = nil)
+    s || @opts[:subject_prefix] + @msg.subject
+  end
 end
