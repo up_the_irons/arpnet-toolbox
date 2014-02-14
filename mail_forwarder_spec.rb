@@ -25,4 +25,11 @@ describe MailForwarderBase do
     end
   end
 end
+
+describe MailForwarderAsAttachment do
+  context "send()" do
+    it "should create new mail"
+    it "should set headers and body"
+    it "should add original mail as attachment"
+  end
 end
