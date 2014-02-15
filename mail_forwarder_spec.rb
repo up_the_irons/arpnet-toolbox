@@ -27,9 +27,32 @@ describe MailForwarderBase do
 end
 
 describe MailForwarderAsAttachment do
+  before do
+    @msg = double(:msg,
+                  :subject => "Hello")
+    @to = 'you@example.com'
+    @from = 'me@example.com'
+    @body = 'Check this out'
+    @mail_forwarder = MailForwarderAsAttachment.new(@msg)
+  end
+
   context "send()" do
-    it "should create new mail"
-    it "should set headers and body"
-    it "should add original mail as attachment"
+    def do_send
+      @mail_forwarder.send(@to, @from, @body)
+    end
+
+    it "should create new mail with headers, add attachment, then send" do
+      @mail = double(:mail)
+
+      expect(Mail).to receive(:new).and_return(@mail)
+      expect(@mail).to receive(:[]=).with(:to, @to)
+      expect(@mail).to receive(:[]=).with(:from, @from)
+      expect(@mail).to receive(:[]=).with(:body, @body)
+      expect(@mail).to receive(:[]=).with(:subject, anything())
+      expect(@mail).to receive(:add_part).with(@msg)
+      expect(@mail).to receive(:deliver!)
+
+      do_send
+    end
   end
 end
