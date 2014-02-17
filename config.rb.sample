@@ -1,0 +1,12 @@
+CONFIG = {
+  :mail => Proc.new {
+    retriever_method :imap, :address    => "imap.googlemail.com",
+                            :port       => 993,
+                            :user_name  => "<username>",
+                            :password   => "<password>",
+                            :enable_ssl => true
+
+    delivery_method :sendmail
+  },
+  :from => 'abuse@example.com',
+}
