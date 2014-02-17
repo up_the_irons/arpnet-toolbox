@@ -9,16 +9,14 @@
 #   - Open SMTP Relay Notice
 #
 class MailClassifierBase
-  def initialize(msg)
-    @msg = msg
+  def initialize
   end
 end
 
 # The simplest kind of classification.  Looks for a specific token within
 # the body of a message.  token may be a single token or an array of tokens.
 class MailClassifierByToken < MailClassifierBase
-  def initialize(msg, tokens)
-    super(msg)
+  def initialize(tokens)
     @tokens = [tokens].flatten
   end
 
@@ -27,12 +25,12 @@ class MailClassifierByToken < MailClassifierBase
   # MailClassification class does not exist, nil is returned.  If multiple
   # tokens could have matched, and the corresponding MailClassification class
   # exists, the first match wins.
-  def classification
+  def classification(msg)
     @tokens.each do |token|
-      if @msg.body =~ /#{token}/m
+      if msg.body =~ /#{token}/m
         begin
           t = token.gsub(/[^a-zA-Z0-9]/, '')
-          return MailClassification.const_get(t).new(@msg)
+          return MailClassification.const_get(t).new(msg)
         rescue NameError
           nil
         end

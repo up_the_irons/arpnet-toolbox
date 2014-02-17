@@ -20,8 +20,8 @@ describe MailClassifierByToken do
       end
 
       it "should return MailClassification::SPAM" do
-        @classifier = MailClassifierByToken.new(@msg, @token)
-        expect(@classifier.classification).to \
+        @classifier = MailClassifierByToken.new(@token)
+        expect(@classifier.classification(@msg)).to \
           be_an_instance_of(MailClassification::SPAM)
       end
     end
@@ -46,8 +46,8 @@ describe MailClassifierByToken do
       end
 
       it "should return MailClassification::DMCATakedown (first match)" do
-        @classifier = MailClassifierByToken.new(@msg, @tokens)
-        expect(@classifier.classification).to \
+        @classifier = MailClassifierByToken.new(@tokens)
+        expect(@classifier.classification(@msg)).to \
           be_an_instance_of(MailClassification::DMCATakedown)
       end
     end
@@ -59,8 +59,8 @@ describe MailClassifierByToken do
       end
 
       it "should return nil" do
-        @classifier = MailClassifierByToken.new(@msg, @token)
-        expect(@classifier.classification).to be_nil
+        @classifier = MailClassifierByToken.new(@token)
+        expect(@classifier.classification(@msg)).to be_nil
       end
     end
   end
