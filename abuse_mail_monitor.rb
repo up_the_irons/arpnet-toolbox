@@ -12,6 +12,13 @@
 # complaint.
 
 require 'mail_monitor'
-require 'arpnet_mail_config' # Site specific
+require 'ip_finder'
 
-monitor = MailMonitor.new(60, &ARPNET_MAIL_CONFIG)
+# Site specific, see config.rb.sample
+require 'config'
+
+monitor = MailMonitor.new(60, &CONFIG[:mail])
+from = CONFIG[:from]
+
+monitor.go do |msg|
+end
