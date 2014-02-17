@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/mail_classifier'
 
-describe MailClassifierByToken do
+describe MailClassifier::ByToken do
   context "classification()" do
     context "with spammy mail and spam token" do
       before do
@@ -19,10 +19,10 @@ describe MailClassifierByToken do
                       )
       end
 
-      it "should return MailClassification::SPAM" do
-        @classifier = MailClassifierByToken.new(@token)
+      it "should return MailClassifier::Classification::SPAM" do
+        @classifier = MailClassifier::ByToken.new(@token)
         expect(@classifier.classification(@msg)).to \
-          be_an_instance_of(MailClassification::SPAM)
+          be_an_instance_of(MailClassifier::Classification::SPAM)
       end
     end
 
@@ -45,10 +45,10 @@ describe MailClassifierByToken do
                       )
       end
 
-      it "should return MailClassification::DMCATakedown (first match)" do
-        @classifier = MailClassifierByToken.new(@tokens)
+      it "should return MailClassifier::Classification::DMCATakedown (first match)" do
+        @classifier = MailClassifier::ByToken.new(@tokens)
         expect(@classifier.classification(@msg)).to \
-          be_an_instance_of(MailClassification::DMCATakedown)
+          be_an_instance_of(MailClassifier::Classification::DMCATakedown)
       end
     end
 
@@ -59,7 +59,7 @@ describe MailClassifierByToken do
       end
 
       it "should return nil" do
-        @classifier = MailClassifierByToken.new(@token)
+        @classifier = MailClassifier::ByToken.new(@token)
         expect(@classifier.classification(@msg)).to be_nil
       end
     end

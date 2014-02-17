@@ -1,59 +1,63 @@
-# Base class for a mail classification system.  Uses the Mail gem.
+# A mail classification system.  Uses the Mail gem.
 #
-# Input is a Mail object.  Output will indicate what category or class the
-# mail is considered to be.  Examples include:
+# Given a Mail object, we want to indicate the category / class the mail is
+# considered to be.  Examles include:
 #
 #   - SPAM
 #   - DMCA Takedown Notice
 #   - DDoS Abuse Report
 #   - Open SMTP Relay Notice
-#
-class MailClassifierBase
-  def initialize
-  end
-end
 
-# The simplest kind of classification.  Looks for a specific token within
-# the body of a message.  token may be a single token or an array of tokens.
-class MailClassifierByToken < MailClassifierBase
-  def initialize(tokens)
-    @tokens = [tokens].flatten
+module MailClassifier
+  class Base
+    def classification(*args)
+      raise NotImplementedError
+    end
   end
 
-  # Return a class within the MailClassification module that matches the
-  # alphanumeric part of the token; if no tokens are found or
-  # MailClassification class does not exist, nil is returned.  If multiple
-  # tokens could have matched, and the corresponding MailClassification class
-  # exists, the first match wins.
-  def classification(msg)
-    @tokens.each do |token|
-      if msg.body =~ /#{token}/m
-        begin
-          t = token.gsub(/[^a-zA-Z0-9]/, '')
-          return MailClassification.const_get(t).new(msg)
-        rescue NameError
-          nil
+  # The simplest kind of classification.  Looks for a specific token within
+  # the body of a message.  token may be a single token or an array of tokens.
+  class ByToken < Base
+    def initialize(tokens)
+      @tokens = [tokens].flatten
+    end
+
+    # Return a class within the Classification module that matches the
+    # alphanumeric part of the token; if no tokens are found or Classification
+    # class does not exist, nil is returned.  If multiple tokens could have
+    # matched, and the corresponding Classification class exists, the first
+    # match wins; therefore, tokens should be passed in order of highest to
+    # lowest preference
+    def classification(msg)
+      @tokens.each do |token|
+        if msg.body =~ /#{token}/m
+          begin
+            t = token.gsub(/[^a-zA-Z0-9]/, '')
+            return Classification.const_get(t).new(msg)
+          rescue NameError
+            nil
+          end
         end
+      end
+
+      nil
+    end
+  end
+
+  module Classification
+    class Base
+      def initialize(msg)
+        @msg = msg
       end
     end
 
-    nil
-  end
-end
-
-module MailClassification
-  class Base
-    def initialize(msg)
-      @msg = msg
+    class SPAM < Base
     end
-  end
 
-  class SPAM < Base
-  end
+    class DMCATakedown < Base
+    end
 
-  class DMCATakedown < Base
-  end
-
-  class SMTPOpenRelayNotice < Base
+    class SMTPOpenRelayNotice < Base
+    end
   end
 end
