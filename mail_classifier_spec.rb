@@ -26,6 +26,32 @@ describe MailClassifierByToken do
       end
     end
 
+    context "with multiple tokens" do
+      before do
+        @tokens = %w(@@DMCATakedown @@SPAM @@SMTPOpenRelayNotice)
+        @msg = double(:msg,
+                      :subject => "I am many things",
+                      :body => <<-END
+                         Line 1
+                         Line 2
+                         Hello
+
+                         @@SMTPOpenRelayNotice
+                         @@DMCATakedown
+                         @@SPAM
+
+                         Bye
+                      END
+                      )
+      end
+
+      it "should return MailClassification::DMCATakedown (first match)" do
+        @classifier = MailClassifierByToken.new(@msg, @tokens)
+        expect(@classifier.classification).to \
+          be_an_instance_of(MailClassification::DMCATakedown)
+      end
+    end
+
     context "with token and no defined class" do
       before do
         @token = '@@SomeOtherThing'

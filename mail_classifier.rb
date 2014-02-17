@@ -15,24 +15,31 @@ class MailClassifierBase
 end
 
 # The simplest kind of classification.  Looks for a specific token within
-# the body of a message.
+# the body of a message.  token may be a single token or an array of tokens.
 class MailClassifierByToken < MailClassifierBase
-  def initialize(msg, token)
+  def initialize(msg, tokens)
     super(msg)
-    @token = token
+    @tokens = [tokens].flatten
   end
 
   # Return a class within the MailClassification module that matches the
-  # alphanumeric part of the token
+  # alphanumeric part of the token; if no tokens are found or
+  # MailClassification class does not exist, nil is returned.  If multiple
+  # tokens could have matched, and the corresponding MailClassification class
+  # exists, the first match wins.
   def classification
-    begin
-      if @msg.body =~ /#{@token}/m
-        t = @token.gsub(/[^a-zA-Z0-9]/, '')
-        MailClassification.const_get(t).new(@msg)
+    @tokens.each do |token|
+      if @msg.body =~ /#{token}/m
+        begin
+          t = token.gsub(/[^a-zA-Z0-9]/, '')
+          return MailClassification.const_get(t).new(@msg)
+        rescue NameError
+          nil
+        end
       end
-    rescue NameError
-      nil
     end
+
+    nil
   end
 end
 
