@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/mail_forwarder'
 
-describe MailForwarderBase do
+describe MailForwarder::Base do
   before do
     @msg = double(:msg, :subject => "Die Katze ist auf dem Tisch")
     @subject_prefix = "Forwarded Message: "
-    @mail_forwarder = MailForwarderBase.new(@msg, :subject_prefix => @subject_prefix)
+    @mail_forwarder = MailForwarder::Base.new(@msg, :subject_prefix => @subject_prefix)
   end
 
   context "subject()" do
@@ -26,14 +26,14 @@ describe MailForwarderBase do
   end
 end
 
-describe MailForwarderAsAttachment do
+describe MailForwarder::AsAttachment do
   before do
     @msg = double(:msg,
                   :subject => "Hello")
     @to = 'you@example.com'
     @from = 'me@example.com'
     @body = 'Check this out'
-    @mail_forwarder = MailForwarderAsAttachment.new(@msg)
+    @mail_forwarder = MailForwarder::AsAttachment.new(@msg)
   end
 
   context "send()" do
