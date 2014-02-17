@@ -44,6 +44,27 @@ module MailClassifier
     end
   end
 
+  # A meta classifier
+  class ByClassifier < Base
+    def initialize(classifiers)
+      @classifiers = classifiers
+    end
+
+    # Returns a classification as determined by the classifiers passed during
+    # initialization.  If multiple classifiers would have returned a valid
+    # class, the first one wins; therefore, classifiers should be passed in
+    # order of highest to lowest preference
+    def classification(msg)
+      @classifiers.each do |classifier|
+        if klass = classifier.classification(msg)
+          return klass
+        end
+      end
+
+      nil
+    end
+  end
+
   module Classification
     class Base
       def initialize(msg)

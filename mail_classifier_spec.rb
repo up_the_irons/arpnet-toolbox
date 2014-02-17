@@ -65,3 +65,38 @@ describe MailClassifier::ByToken do
     end
   end
 end
+
+describe MailClassifier::ByClassifier do
+  context "with multiple classifiers" do
+    before do
+      # This could be done with simply one ByToken classifier, but since
+      # at the time of this writing, we only have one classifier type,
+      # we'll simply use multiple separate ones for testing
+      @classifiers = [
+        MailClassifier::ByToken.new('@@SPAM'),
+        MailClassifier::ByToken.new('@@DMCATakedown'),
+        MailClassifier::ByToken.new('@@SMTPOpenRelayNotice'),
+      ]
+      @msg = double(:msg,
+                    :subject => "I am many things",
+                    :body => <<-END
+                       Line 1
+                       Line 2
+                       Hello
+
+                       @@SMTPOpenRelayNotice
+                       @@DMCATakedown
+                       @@SPAM
+
+                       Bye
+                    END
+                    )
+    end
+
+    it "should return MailClassifier::Classification::SPAM (first match)" do
+      @classifier = MailClassifier::ByClassifier.new(@classifiers)
+      expect(@classifier.classification(@msg)).to \
+        be_an_instance_of(MailClassifier::Classification::SPAM)
+    end
+  end
+end
