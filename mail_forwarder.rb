@@ -16,19 +16,24 @@ module MailForwarder
     end
   end
 
-  # A basic class to forward email (as an attachment).  Uses the Mail gem.
-  class AsAttachment < Base
-    def send(to, from, body, subj = nil)
-      subject = subject(subj)
+  module AsAttachment
+    class Base < MailForwarder::Base
+    end
 
-      mail = Mail.new
-      mail[:to] = to
-      mail[:from] = from
-      mail[:subject] = subject
-      mail[:body] = body
+    # A basic class to forward email (as an attachment).  Uses the Mail gem.
+    class Simple < Base
+      def send(to, from, body, subj = nil)
+        subject = subject(subj)
 
-      mail.add_part(@msg)
-      mail.deliver!
+        mail = Mail.new
+        mail[:to] = to
+        mail[:from] = from
+        mail[:subject] = subject
+        mail[:body] = body
+
+        mail.add_part(@msg)
+        mail.deliver!
+      end
     end
   end
 end

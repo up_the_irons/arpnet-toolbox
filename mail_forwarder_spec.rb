@@ -46,14 +46,14 @@ describe MailForwarder::Base do
   end
 end
 
-describe MailForwarder::AsAttachment do
+describe MailForwarder::AsAttachment::Simple do
   before do
     @msg = double(:msg,
                   :subject => "Hello")
     @to = 'you@example.com'
     @from = 'me@example.com'
     @body = 'Check this out'
-    @mail_forwarder = MailForwarder::AsAttachment.new(@msg)
+    @mail_forwarder = MailForwarder::AsAttachment::Simple.new(@msg)
   end
 
   context "send()" do
