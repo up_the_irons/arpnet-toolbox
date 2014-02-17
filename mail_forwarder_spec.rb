@@ -3,11 +3,31 @@ require File.dirname(__FILE__) + '/mail_forwarder'
 describe MailForwarder::Base do
   before do
     @msg = double(:msg, :subject => "Die Katze ist auf dem Tisch")
-    @subject_prefix = "Forwarded Message: "
-    @mail_forwarder = MailForwarder::Base.new(@msg, :subject_prefix => @subject_prefix)
+  end
+
+  context "initialization" do
+    context "with block given" do
+      it "should set Mail.defaults with block" do
+        block = Proc.new {}
+        expect(Mail).to receive(:defaults).with(&block)
+        MailForwarder::Base.new(@msg, &block)
+      end
+    end
+
+    context "without block given" do
+      it "should not set Mail.defaults" do
+        expect(Mail).to_not receive(:defaults)
+        MailForwarder::Base.new(@msg)
+      end
+    end
   end
 
   context "subject()" do
+    before do
+      @subject_prefix = "Forwarded Message: "
+      @mail_forwarder = MailForwarder::Base.new(@msg, :subject_prefix => @subject_prefix)
+    end
+
     context "with arg" do
       before do
         @s = 'Hi!'

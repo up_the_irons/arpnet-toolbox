@@ -2,7 +2,9 @@ require 'mail_base'
 
 module MailForwarder
   class Base < MailBase
-    def initialize(msg, opts = {})
+    def initialize(msg, opts = {}, &block)
+      super(&block) if block_given?
+
       @msg = msg
       @opts = {
         :subject_prefix => "FW: "
