@@ -80,5 +80,8 @@ module MailClassifier
 
     class SMTPOpenRelayNotice < Base
     end
+
+    class NTPAmplification < Base
+    end
   end
 end
