@@ -100,3 +100,9 @@ describe MailClassifier::ByClassifier do
     end
   end
 end
+
+describe MailClassifier::Classification::Base do
+  context "forwarder()" do
+    it "should return basic mail forwarder"
+  end
+end

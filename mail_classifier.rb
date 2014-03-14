@@ -70,6 +70,9 @@ module MailClassifier
       def initialize(msg)
         @msg = msg
       end
+
+      def forwarder
+      end
     end
 
     class SPAM < Base
