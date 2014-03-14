@@ -16,7 +16,7 @@ module MailForwarder
     end
 
     def send(*args)
-      raise NotImplementedError
+      raise NotImplementedError.new("Implement me in a child class")
     end
   end
 
