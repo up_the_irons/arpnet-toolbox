@@ -46,7 +46,13 @@ describe MailForwarder::Base do
   end
 
   context "send()" do
-    context "should raise NotImplementedError"
+    before do
+      @mail_forwarder = MailForwarder::Base.new(@msg)
+    end
+
+    it "should raise NotImplementedError" do
+      expect { @mail_forwarder.send }.to raise_error(NotImplementedError)
+    end
   end
 end
 

@@ -16,6 +16,7 @@ module MailForwarder
     end
 
     def send(*args)
+      raise NotImplementedError
     end
   end
 
