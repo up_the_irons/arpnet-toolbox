@@ -14,6 +14,9 @@ module MailForwarder
     def subject(s = nil)
       s || @opts[:subject_prefix] + @msg.subject
     end
+
+    def send(*args)
+    end
   end
 
   module AsAttachment

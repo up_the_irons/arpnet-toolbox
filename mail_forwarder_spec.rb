@@ -44,6 +44,10 @@ describe MailForwarder::Base do
       end
     end
   end
+
+  context "send()" do
+    context "should raise NotImplementedError"
+  end
 end
 
 describe MailForwarder::AsAttachment::Simple do
