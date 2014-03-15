@@ -1,3 +1,5 @@
+require 'mail_forwarder'
+
 # A mail classification system.  Uses the Mail gem.
 #
 # Given a Mail object, we want to indicate the category / class the mail is
@@ -72,6 +74,7 @@ module MailClassifier
       end
 
       def forwarder
+        MailForwarder::Base
       end
     end
 

@@ -102,7 +102,13 @@ describe MailClassifier::ByClassifier do
 end
 
 describe MailClassifier::Classification::Base do
+  before do
+    @classification = MailClassifier::Classification::Base.new('foo')
+  end
+
   context "forwarder()" do
-    it "should return basic mail forwarder"
+    it "should return basic mail forwarder" do
+      expect(@classification.forwarder).to eq(MailForwarder::Base)
+    end
   end
 end
