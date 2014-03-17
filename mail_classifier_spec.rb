@@ -108,7 +108,7 @@ describe MailClassifier::Classification::Base do
 
   context "forwarder()" do
     it "should return basic mail forwarder" do
-      expect(@classification.forwarder).to eq(MailForwarder::Base)
+      expect(@classification.forwarder).to eq(MailForwarder::AsAttachment::Simple)
     end
   end
 end

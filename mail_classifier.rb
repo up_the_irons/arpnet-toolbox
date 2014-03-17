@@ -74,7 +74,7 @@ module MailClassifier
       end
 
       def forwarder
-        MailForwarder::Base
+        MailForwarder::AsAttachment::Simple
       end
     end
 
