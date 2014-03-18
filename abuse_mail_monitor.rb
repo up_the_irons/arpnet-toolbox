@@ -12,13 +12,31 @@
 # complaint.
 
 require 'mail_monitor'
+require 'mail_classifier'
 require 'ip_finder'
 
 # Site specific, see config.rb.sample
 require 'config'
 
-monitor = MailMonitor.new(60, &CONFIG[:mail])
-from = CONFIG[:from]
+classifier = CONFIG[:classifier]
+from       = CONFIG[:from]
+body       = CONFIG[:body]
 
+monitor = MailMonitor.new(60, &CONFIG[:mail])
 monitor.go do |msg|
+  begin
+    # @to = TODO Lookup to whom to forward
+    @ip = IpFinder.new.find(msg.body)
+    # @account = IpBlock.account(@ip)
+
+    mail_class = @classifier.classification(msg)
+
+    forwarder = mail_class.forwarder.new(msg)
+    forwarder.send(@to, from, body)
+
+    # TODO: Delete msg
+
+  rescue Exception => e
+    $stderr.puts e
+  end
 end
