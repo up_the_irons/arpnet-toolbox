@@ -40,3 +40,14 @@ monitor.go do |msg|
     $stderr.puts e
   end
 end
+
+# TODO: WIP
+# def notify!(error)
+#   mail = Mail.new do
+#     to ARPNET_EXCEPTION
+#   end
+# end
+
+# TODO: WIP
+# AbuseMailMonitor? to be something like above &^^^^^
+#   will have to() method that is abstract
