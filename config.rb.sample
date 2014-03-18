@@ -9,4 +9,5 @@ CONFIG = {
     delivery_method :sendmail
   },
   :from => 'abuse@example.com',
+  :body => File.readlines('body.txt').join("")
 }
