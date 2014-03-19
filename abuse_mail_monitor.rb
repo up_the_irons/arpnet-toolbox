@@ -27,7 +27,8 @@ monitor = MailMonitor.new(60, { :delete_after_find => false }, &CONFIG[:mail])
 monitor.go do |msg|
   begin
     # @to = TODO Lookup to whom to forward
-    @ip = IpFinder.new.find(msg.body)
+    @ip = IpFinder.new.find(msg.body.to_s) ||
+          IpFinder.new.find(msg.subject, 'server used for an attack: ')
     # @account = IpBlock.account(@ip)
 
     mail_class = classifier.classification(msg)
