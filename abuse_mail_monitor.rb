@@ -23,7 +23,8 @@ from       = CONFIG[:from]
 body       = CONFIG[:body]
 
 monitor = MailMonitor.new(60, &CONFIG[:mail])
-monitor.go do |msg|
+monitor.go(:delete_after_find => false) do |msg|
+  # TODO: :delete_after_find => true, after testing
   begin
     # @to = TODO Lookup to whom to forward
     @ip = IpFinder.new.find(msg.body)
@@ -34,8 +35,7 @@ monitor.go do |msg|
     forwarder = mail_class.forwarder.new(msg)
     forwarder.send(@to, from, body)
 
-    # TODO: Delete msg
-
+    puts "NOTICE: Sent to #{@to} message with subject: '#{msg.subject}'"
   rescue Exception => e
     $stderr.puts e
   end
