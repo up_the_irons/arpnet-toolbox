@@ -5,8 +5,11 @@ require 'mail_base'
 class MailReader < MailBase
   # Retrieve all messages from the mailbox and yield each to a block.
   # Warning: this can be slow on large mailboxes
-  def go
-    Mail.all do |msg|
+  #
+  # Supports optional 'options' hash which is passed directly to
+  # Mail.all (and in turn, Mail.find)
+  def go(options = {})
+    Mail.all(options) do |msg|
       yield msg
     end
   end

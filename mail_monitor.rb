@@ -5,9 +5,10 @@ require 'mail_reader'
 # a specified maximum number of iterations.  See MailReader for how to set up
 # mail retrieval settings.
 class MailMonitor < MailReader
-  def initialize(sleep_time, &settings)
+  def initialize(sleep_time, options = {}, &settings)
     super(&settings)
     @sleep_time = sleep_time
+    @options = options
   end
 
   def go(iterations = nil)
@@ -18,7 +19,7 @@ class MailMonitor < MailReader
         i >= iterations ? break : i += 1
       end
 
-      super()
+      super(@options)
 
       sleep @sleep_time
     end
