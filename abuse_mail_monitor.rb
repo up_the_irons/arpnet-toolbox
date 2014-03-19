@@ -18,7 +18,7 @@ require 'ip_finder'
 # Site specific, see config.rb.sample
 require 'config'
 
-classifier = CONFIG[:classifier]
+classifier = MailClassifier::ByClassifier.new(CONFIG[:classifiers])
 from       = CONFIG[:from]
 body       = CONFIG[:body]
 
@@ -30,7 +30,7 @@ monitor.go(:delete_after_find => false) do |msg|
     @ip = IpFinder.new.find(msg.body)
     # @account = IpBlock.account(@ip)
 
-    mail_class = @classifier.classification(msg)
+    mail_class = classifier.classification(msg)
 
     forwarder = mail_class.forwarder.new(msg)
     forwarder.send(@to, from, body)
