@@ -22,9 +22,9 @@ classifier = MailClassifier::ByClassifier.new(CONFIG[:classifiers])
 from       = CONFIG[:from]
 body       = CONFIG[:body]
 
-monitor = MailMonitor.new(60, &CONFIG[:mail])
-monitor.go(:delete_after_find => false) do |msg|
-  # TODO: :delete_after_find => true, after testing
+# TODO: :delete_after_find => true, after testing
+monitor = MailMonitor.new(60, { :delete_after_find => false }, &CONFIG[:mail])
+monitor.go do |msg|
   begin
     # @to = TODO Lookup to whom to forward
     @ip = IpFinder.new.find(msg.body)
