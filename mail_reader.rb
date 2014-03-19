@@ -6,8 +6,7 @@ class MailReader < MailBase
   # Retrieve all messages from the mailbox and yield each to a block.
   # Warning: this can be slow on large mailboxes
   def go
-    @all = Mail.all
-    @all.each do |msg|
+    Mail.all do |msg|
       yield msg
     end
   end

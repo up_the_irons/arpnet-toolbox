@@ -25,7 +25,7 @@ describe MailReader do
     end
 
     it "should yield messages to a block" do
-      expect(Mail).to receive(:all).and_return(@msgs)
+      expect(Mail).to receive(:all).and_yield(@msgs[0]).and_yield(@msgs[1])
       expect { |p| @mail_reader.go(&p) }.to yield_successive_args(*@msgs)
     end
   end
