@@ -10,6 +10,12 @@ CONFIG = {
   },
   :from => 'abuse@example.com',
   :body => File.read('body.txt'),
+
+  # Provide a method to lookup to whom to forward emails based on some key
+  :to => Proc.new do |key|
+    "john@example.com"
+  end,
+
   :classifiers => [
     MailClassifier::ByToken.new(%w(
       #SPAM
