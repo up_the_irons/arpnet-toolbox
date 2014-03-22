@@ -26,7 +26,6 @@ body       = CONFIG[:body]
 monitor = MailMonitor.new(60, { :delete_after_find => false }, &CONFIG[:mail])
 monitor.go do |msg|
   begin
-    # @to = TODO Lookup to whom to forward
     @ip = IpFinder.new.find(msg.body.to_s) ||
           IpFinder.new.find(msg.subject, 'server used for an attack: ')
     @to = CONFIG[:to].call(@ip)
@@ -36,6 +35,7 @@ monitor.go do |msg|
     if mail_class
       forwarder = mail_class.forwarder.new(msg)
       # forwarder.send(@to, from, body)
+
       puts "NOTICE: Sent to #{@to} message with subject: '#{msg.subject}'"
     else
       puts "NOTICE: Could not classify message: #{msg.subject}"
@@ -44,14 +44,3 @@ monitor.go do |msg|
     $stderr.puts e
   end
 end
-
-# TODO: WIP
-# def notify!(error)
-#   mail = Mail.new do
-#     to ARPNET_EXCEPTION
-#   end
-# end
-
-# TODO: WIP
-# AbuseMailMonitor? to be something like above &^^^^^
-#   will have to() method that is abstract
