@@ -88,6 +88,18 @@ describe IpFinder do
         it "should return IP" do
           expect(@ip_finder.find(@pattern, @token)).to eq(@ip)
         end
+
+        it "should return IP (example 2)" do
+          @ip = "fda4:7d0:d9cd::3fc1"
+          @pattern = "[ddos-response@example.com: Exploitable server used for an attack: #{@ip}]"
+          expect(@ip_finder.find(@pattern, @token)).to eq(@ip)
+        end
+
+        it "should return IP (example 3)" do
+          @ip = "fe20::150:560f:fec4:3"
+          @pattern = "[ddos-response@example.com: Exploitable server used for an attack: #{@ip}]"
+          expect(@ip_finder.find(@pattern, @token)).to eq(@ip)
+        end
       end
     end
   end
