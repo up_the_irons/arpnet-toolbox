@@ -35,33 +35,33 @@ describe IpFinder do
   end
 
   context "with valid IP" do
-  context "with simple @ip pattern" do
-    before do
-      @pattern = "@ip #{@ip}"
+    context "with simple @ip pattern" do
+      before do
+        @pattern = "@ip #{@ip}"
+      end
+
+      include_examples "finds IP"
     end
 
-    include_examples "finds IP"
-  end
+    context "with sloppy @ip pattern" do
+      before do
+        @pattern = "lkjs @ip #{@ip} some crap over here"
+      end
 
-  context "with sloppy @ip pattern" do
-    before do
-      @pattern = "lkjs @ip #{@ip} some crap over here"
+      include_examples "finds IP"
     end
 
-    include_examples "finds IP"
-  end
+    context "with multiline @ip pattern" do
+      before do
+        @pattern = <<-TEXT
+          some stuff here
+          @ip #{@ip} lskjdf
+          more stuff
+        TEXT
+      end
 
-  context "with multiline @ip pattern" do
-    before do
-      @pattern = <<-TEXT
-        some stuff here
-        @ip #{@ip} lskjdf
-        more stuff
-      TEXT
+      include_examples "finds IP"
     end
-
-    include_examples "finds IP"
-  end
   end
 
   context "without valid IP" do
