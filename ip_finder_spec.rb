@@ -64,13 +64,19 @@ describe IpFinder do
     end
 
     context "with trailing characters and no spaces" do
+      before do
+        @token = "server used for an attack: "
+      end
+
       context "IPv4" do
         before do
           @ip = "192.168.1.10"
           @pattern = "[ddos-response@example.com: Exploitable server used for an attack: #{@ip}]"
         end
 
-        include_examples "finds IP"
+        it "should return IP" do
+          expect(@ip_finder.find(@pattern, @token)).to eq(@ip)
+        end
       end
 
       context "IPv6" do
