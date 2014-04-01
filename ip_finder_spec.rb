@@ -62,6 +62,26 @@ describe IpFinder do
 
       include_examples "finds IP"
     end
+
+    context "with trailing characters and no spaces" do
+      context "IPv4" do
+        before do
+          @ip = "192.168.1.10"
+          @pattern = "[ddos-response@example.com: Exploitable server used for an attack: #{@ip}]"
+        end
+
+        include_examples "finds IP"
+      end
+
+      context "IPv6" do
+        before do
+          @ip = "fe80:dead:beef::100"
+          @pattern = "[ddos-response@example.com: Exploitable server used for an attack: #{@ip}]"
+        end
+
+        include_examples "finds IP"
+      end
+    end
   end
 
   context "without valid IP" do
