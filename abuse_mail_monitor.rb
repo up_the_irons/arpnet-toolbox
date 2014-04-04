@@ -36,7 +36,7 @@ monitor.go do |msg|
       forwarder = mail_class.forwarder.new(msg)
       # forwarder.send(@to, from, body)
 
-      puts "NOTICE: Sent to #{@to} message with subject: '#{msg.subject}'"
+      puts "NOTICE: Sent to #{@to} message with subject: #{msg.subject}"
     else
       puts "NOTICE: Could not classify message: #{msg.subject}"
     end
