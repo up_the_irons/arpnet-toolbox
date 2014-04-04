@@ -77,6 +77,12 @@ describe IpFinder do
         it "should return IP" do
           expect(@ip_finder.find(@pattern, @token)).to eq(@ip)
         end
+
+        it "should return IP (example 2)" do
+          @ip = "192.168.1.2"
+          @pattern = "[ddos-response@example.com: Exploitable server used for an attack: #{@ip}]"
+          expect(@ip_finder.find(@pattern, @token)).to eq(@ip)
+        end
       end
 
       context "IPv6" do
