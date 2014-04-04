@@ -27,7 +27,7 @@ monitor = MailMonitor.new(60, { :delete_after_find => false }, &CONFIG[:mail])
 monitor.go do |msg|
   begin
     @ip = IpFinder.new.find(msg.body.to_s) ||
-          IpFinder.new.find(msg.subject, 'server used for an attack: ')
+          IpFinder.new.find(msg.subject, 'server used for an attack:')
     @to = CONFIG[:to].call(@ip)
 
     mail_class = classifier.classification(msg)
