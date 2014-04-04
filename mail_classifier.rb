@@ -46,6 +46,12 @@ module MailClassifier
     end
   end
 
+  class ByString < Base
+    def initialize(strings, klass)
+      @strings = [strings].flatten
+    end
+  end
+
   # A meta classifier
   class ByClassifier < Base
     def initialize(classifiers)

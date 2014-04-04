@@ -101,6 +101,12 @@ describe MailClassifier::ByClassifier do
   end
 end
 
+describe MailClassifier::ByString do
+  context "classification()" do
+    it 'should do something'
+  end
+end
+
 describe MailClassifier::Classification::Base do
   before do
     @classification = MailClassifier::Classification::Base.new('foo')
