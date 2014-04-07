@@ -93,7 +93,9 @@ module MailClassifier
     class SMTPOpenRelayNotice < Base
     end
 
-    class NTPAmplification < Base
+    module Attacks
+      class NTPAmplification < Base
+      end
     end
   end
 end
