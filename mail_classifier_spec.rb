@@ -118,7 +118,7 @@ describe MailClassifier::ByString do
       end
 
       it "should return MailClassifier::Classification::Attacks::NTPAmplification" do
-        @classifier = MailClassifier::ByString.new(@string, Attacks::NTPAmplification)
+        @classifier = MailClassifier::ByString.new(@string, "Attacks::NTPAmplification")
         expect(@classifier.classification(@msg)).to \
           be_an_instance_of(MailClassifier::Classification::Attacks::NTPAmplification)
       end
