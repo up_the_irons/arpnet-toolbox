@@ -54,10 +54,23 @@ module MailClassifier
 
     # Return a class within the Classification module that matches klass
     # (passed in the constructor) if one of the strings (also passed in
-    # constructor) is present in # msg
+    # constructor) is present in msg (body or subject)
     def classification(msg)
+      @strings.each do |string|
+        if msg.subject =~ /#{string}/m || msg.body =~ /#{string}/m
+          begin
+            klass = @klass.split("::").inject(Classification) do |sum, x|
+              sum.const_get(x)
+            end
 
-      1
+            return klass.new(msg)
+          rescue NameError
+            nil
+          end
+        end
+      end
+
+      nil
     end
   end
 

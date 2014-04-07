@@ -140,12 +140,26 @@ describe MailClassifier::ByString do
                       )
       end
 
-      it "should return MailClassifier::Classification::Attacks::NTPAmplification"
-
+      it "should return MailClassifier::Classification::Attacks::NTPAmplification" do
+        @classifier = MailClassifier::ByString.new(@string, "Attacks::NTPAmplification")
+        expect(@classifier.classification(@msg)).to \
+          be_an_instance_of(MailClassifier::Classification::Attacks::NTPAmplification)
+      end
     end
 
     context "without mail that contains our strings" do
-      it "should return nil"
+      before do
+        @string = 'lsjdlfkjdsf'
+        @msg = double(:msg,
+                      :subject => "foo",
+                      :body => "Oh, hello there...")
+
+      end
+
+      it "should return nil" do
+        @classifier = MailClassifier::ByString.new(@string, "SPAM")
+        expect(@classifier.classification(@msg)).to be_nil
+      end
     end
   end
 end
