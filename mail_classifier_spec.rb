@@ -103,7 +103,50 @@ end
 
 describe MailClassifier::ByString do
   context "classification()" do
-    it 'should do something'
+    context "with mail subject that contains a string" do
+      before do
+        @string = "Exploitable NTP server"
+        @msg = double(:msg,
+                      :subject => "Exploitable NTP server used for an attack: 10.0.0.1",
+                      :body => <<-END
+                         Line 1
+                         Line 2
+                         Hello
+                         Bye
+                      END
+                      )
+      end
+
+      it "should return MailClassifier::Classification::Attacks::NTPAmplification" do
+        @classifier = MailClassifier::ByString.new(@string, Attacks::NTPAmplification)
+        expect(@classifier.classification(@msg)).to \
+          be_an_instance_of(MailClassifier::Classification::Attacks::NTPAmplification)
+      end
+    end
+
+    context "with mail body that contains a string" do
+      before do
+        @string = "Exploitable NTP server"
+        @msg = double(:msg,
+                      :subject => "foo",
+                      :body => <<-END
+                         Line 1
+                         Line 2
+                         Hello
+
+                         Exploitable NTP server used for an attack: 10.0.0.1
+                         Bye
+                      END
+                      )
+      end
+
+      it "should return MailClassifier::Classification::Attacks::NTPAmplification"
+
+    end
+
+    context "without mail that contains our strings" do
+      it "should return nil"
+    end
   end
 end
 

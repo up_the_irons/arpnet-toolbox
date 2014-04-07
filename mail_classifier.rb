@@ -48,7 +48,16 @@ module MailClassifier
 
   class ByString < Base
     def initialize(strings, klass)
+      @klass = klass
       @strings = [strings].flatten
+    end
+
+    # Return a class within the Classification module that matches klass
+    # (passed in the constructor) if one of the strings (also passed in
+    # constructor) is present in # msg
+    def classification(msg)
+
+      1
     end
   end
 
