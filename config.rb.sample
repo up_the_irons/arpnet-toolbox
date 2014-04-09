@@ -19,6 +19,8 @@ CONFIG = {
   :classifiers => [
     MailClassifier::ByString.new('Exploitable NTP server used for an attack',
                                  'Attacks::NTPAmplification'),
+    MailClassifier::ByString.new('Exploitable chargen service used for an attack:',
+                                 'Attacks::ChargenAmplification'),
     MailClassifier::ByToken.new(%w(
       #SPAM
       #DMCATakedown

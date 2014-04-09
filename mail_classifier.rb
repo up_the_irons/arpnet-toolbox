@@ -118,6 +118,9 @@ module MailClassifier
     module Attacks
       class NTPAmplification < Base
       end
+
+      class ChargenAmplification < Base
+      end
     end
   end
 end
