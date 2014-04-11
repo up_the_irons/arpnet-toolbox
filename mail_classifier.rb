@@ -121,6 +121,9 @@ module MailClassifier
 
       class ChargenAmplification < Base
       end
+
+      class SMTPAmplification < Base
+      end
     end
   end
 end
