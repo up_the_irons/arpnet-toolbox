@@ -116,6 +116,10 @@ module MailClassifier
     end
 
     module Attacks
+      # Generic DDoS that doesn't fall into more appropriate category below
+      class DDoS < Base
+      end
+
       class NTPAmplification < Base
       end
 
