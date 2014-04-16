@@ -30,12 +30,22 @@ module MailForwarder
         subject = subject(opts[:subj])
 
         mail = Mail.new
+
         mail[:to] = to
         mail[:from] = from
         mail[:subject] = subject
         mail[:body] = body
+        mail['Content-Disposition'] = 'inline'
 
+        @msg.header['Content-Disposition'] = 'inline'
         mail.add_part(@msg)
+
+        # Mail sets Content-Type to 'multipart/alternative' the moment we use
+        # add_part() above, yet we want it to be 'multipart/mixed'; not sure
+        # why we have to jump through hoops for that
+        mail.content_type = nil
+        mail.send(:add_multipart_mixed_header)
+
         mail.deliver!
       end
     end

@@ -59,7 +59,8 @@ end
 describe MailForwarder::AsAttachment::Simple do
   before do
     @msg = double(:msg,
-                  :subject => "Hello")
+                  :subject => "Hello",
+                  :header => {})
     @to = 'you@example.com'
     @from = 'me@example.com'
     @body = 'Check this out'
@@ -79,7 +80,10 @@ describe MailForwarder::AsAttachment::Simple do
       expect(@mail).to receive(:[]=).with(:from, @from)
       expect(@mail).to receive(:[]=).with(:body, @body)
       expect(@mail).to receive(:[]=).with(:subject, anything())
+      expect(@mail).to receive(:[]=).with('Content-Disposition', 'inline')
       expect(@mail).to receive(:add_part).with(@msg)
+      expect(@mail).to receive(:content_type=).with(nil)
+      expect(@mail).to receive(:send).with(:add_multipart_mixed_header)
       expect(@mail).to receive(:deliver!)
 
       do_send
