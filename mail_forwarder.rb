@@ -26,8 +26,8 @@ module MailForwarder
 
     # A basic class to forward email (as an attachment).  Uses the Mail gem.
     class Simple < Base
-      def send(to, from, body, subj = nil)
-        subject = subject(subj)
+      def send(to, from, body, opts = {})
+        subject = subject(opts[:subj])
 
         mail = Mail.new
         mail[:to] = to
