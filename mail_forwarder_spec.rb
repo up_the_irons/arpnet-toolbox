@@ -68,8 +68,8 @@ describe MailForwarder::AsAttachment::Simple do
   end
 
   context "send()" do
-    def do_send
-      @mail_forwarder.send(@to, @from, @body)
+    def do_send(opts = {})
+      @mail_forwarder.send(@to, @from, @body, opts)
     end
 
     it "should create new mail with headers, add attachment, then send" do
@@ -87,6 +87,25 @@ describe MailForwarder::AsAttachment::Simple do
       expect(@mail).to receive(:deliver!)
 
       do_send
+    end
+
+    it "should assign arbitrary headers if we provide them" do
+      @mail = double(:mail,
+                     :[]= => nil,
+                     :add_part => nil,
+                     :content_type= => nil,
+                     :send => nil,
+                     :deliver! => nil)
+
+      @bcc = "secret@example.com"
+      @reply_to = "john2@example.com"
+
+      allow(Mail).to receive(:new).and_return(@mail)
+
+      expect(@mail).to receive(:[]=).with(:bcc, @bcc)
+      expect(@mail).to receive(:[]=).with('Reply-To', @reply_to)
+
+      do_send(:headers => { :bcc => @bcc, 'Reply-To' => @reply_to })
     end
   end
 end

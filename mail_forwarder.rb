@@ -37,6 +37,12 @@ module MailForwarder
         mail[:body] = body
         mail['Content-Disposition'] = 'inline'
 
+        if h = opts[:headers]
+          h.each do |k, v|
+            mail[k] = v
+          end
+        end
+
         @msg.header['Content-Disposition'] = 'inline'
         mail.add_part(@msg)
 
