@@ -21,6 +21,7 @@ require 'config'
 classifier = MailClassifier::ByClassifier.new(CONFIG[:classifiers])
 from       = CONFIG[:from]
 body       = CONFIG[:body]
+headers    = CONFIG[:headers]
 
 # TODO: :delete_after_find => true, after testing
 monitor = MailMonitor.new(60, { :delete_after_find => false }, &CONFIG[:mail])
@@ -46,7 +47,9 @@ monitor.go do |msg|
       orig_email = msg.parts.last
 
       forwarder = mail_class.forwarder.new(orig_email)
-      forwarder.send(@to, from, body, :subj => "FW: #{msg.subject}")
+      forwarder.send(@to, from, body,
+                     :subj => "FW: #{msg.subject}",
+                     :headers => headers)
 
       puts "NOTICE: Classified message as #{mail_class.class}"
       puts "NOTICE: Sent to #{@to} message with subject: #{msg.subject}"

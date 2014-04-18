@@ -16,6 +16,9 @@ CONFIG = {
     "john@example.com"
   end,
 
+  # Any extra headers can be specified here
+  :headers => {},
+
   :classifiers => [
     MailClassifier::ByString.new('Exploitable NTP server used for an attack',
                                  'Attacks::NTPAmplification'),
