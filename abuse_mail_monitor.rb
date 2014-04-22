@@ -55,7 +55,16 @@ monitor.go do |msg|
       puts "NOTICE: Classified message as #{mail_class.class}"
       puts "NOTICE: Sent to #{@to} message with subject: #{msg.subject}"
     else
-      puts "NOTICE: Could not classify message: #{msg.subject}"
+      notice = "Could not classify message: #{msg.subject}"
+      puts "NOTICE: " + notice
+
+      if to_on_error = CONFIG[:to_on_error]
+        mail = Mail.new
+        mail[:to]   = to_on_error
+        mail[:from] = from
+        mail[:subject] = notice
+        mail.deliver!
+      end
     end
   rescue Exception => e
     $stderr.puts e
