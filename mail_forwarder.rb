@@ -12,7 +12,7 @@ module MailForwarder
     end
 
     def subject(s = nil)
-      s || @opts[:subject_prefix] + @msg.subject
+      s || @opts[:subject_prefix] + @msg.subject.to_s
     end
 
     def send(*args)
