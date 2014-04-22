@@ -59,11 +59,17 @@ monitor.go do |msg|
       puts "NOTICE: " + notice
 
       if to_on_error = CONFIG[:to_on_error]
-        mail = Mail.new
-        mail[:to]   = to_on_error
-        mail[:from] = from
-        mail[:subject] = notice
-        mail.deliver!
+        # Do we have the original email we can just attach?
+        if orig_email
+          forwarder = MailForwarder::AsAttachment::Simple.new(orig_email)
+          forwarder.send(to_on_error, from, notice)
+        else
+          mail = Mail.new
+          mail[:to]   = to_on_error
+          mail[:from] = from
+          mail[:subject] = notice
+          mail.deliver!
+        end
       end
     end
   rescue Exception => e
