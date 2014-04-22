@@ -23,8 +23,9 @@ from       = CONFIG[:from]
 body       = CONFIG[:body]
 headers    = CONFIG[:headers]
 
-# TODO: :delete_after_find => true, after testing
-monitor = MailMonitor.new(60, { :delete_after_find => false }, &CONFIG[:mail])
+puts "NOTICE: Starting monitor..."
+
+monitor = MailMonitor.new(60, { :delete_after_find => true }, &CONFIG[:mail])
 monitor.go do |msg|
   begin
     @ip = IpFinder.new.find(msg.body.to_s) ||
