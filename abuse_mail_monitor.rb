@@ -36,17 +36,17 @@ monitor.go do |msg|
 
     mail_class = classifier.classification(msg)
 
-    if mail_class
-      # The email that we forward to this processor will be contain two parts:
-      #
-      #   part 1: the header/body of our email
-      #           either empty or containing a tag to identify originating IP
-      #   part 2: the original email (abuse complaint)
-      #
-      # What we want to do is only forward the 2nd part, because it is what is
-      # useful.
-      orig_email = msg.parts.last
+    # The email that we forward to this processor will be contain two parts:
+    #
+    #   part 1: the header/body of our email
+    #           either empty or containing a tag to identify originating IP
+    #   part 2: the original email (abuse complaint)
+    #
+    # What we want to do is only forward the 2nd part, because it is what is
+    # useful.
+    orig_email = msg.parts.last
 
+    if mail_class
       forwarder = mail_class.forwarder.new(orig_email)
       forwarder.send(@to, from, body,
                      :subj => "FW: #{msg.subject}",
