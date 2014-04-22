@@ -16,6 +16,10 @@ CONFIG = {
     "john@example.com"
   end,
 
+  # If you want to get an email if a message cannot be classified or
+  # forwarded, assign it here
+  :to_on_error => nil,
+
   # Any extra headers can be specified here
   :headers => {},
 
