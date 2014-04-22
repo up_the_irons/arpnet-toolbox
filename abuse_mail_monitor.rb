@@ -62,7 +62,8 @@ monitor.go do |msg|
         # Do we have the original email we can just attach?
         if orig_email
           forwarder = MailForwarder::AsAttachment::Simple.new(orig_email)
-          forwarder.send(to_on_error, from, notice)
+          forwarder.send(to_on_error, from, notice,
+                         :subj => "FW: #{msg.subject}")
         else
           mail = Mail.new
           mail[:to]   = to_on_error
