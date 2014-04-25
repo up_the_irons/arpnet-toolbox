@@ -13,6 +13,8 @@
 # This monitor can then lookup the customer / owner of the IP and forward the
 # complaint.
 
+$:.unshift File.dirname(__FILE__)
+
 require 'mail_monitor'
 require 'mail_classifier'
 require 'ip_finder'
