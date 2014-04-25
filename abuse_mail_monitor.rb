@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+#
 # Abuse Mail Monitor
 #
 # Copyright ⓒ 2014 ARP Networks, Inc.
