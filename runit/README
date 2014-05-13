@@ -1,1 +1,20 @@
 This is a runit directory for abuse_mail_monitor.rb
+
+In ``run``, edit INSTALL_DIR:
+
+  * INSTALL_DIR is the full path to where this project lives.  It is used to
+    find abuse_mail_monitor.rb
+
+Enable as follows:
+
+::
+
+  ln -s <INSTALL_DIR>/runit /etc/sv/abuse-mail-monitor
+
+OR
+
+I've seen /etc/service being used instead of /etc/sv on newer Ubuntu's:
+
+::
+
+  ln -s <INSTALL_DIR>/runit /etc/service/abuse-mail-monitor
