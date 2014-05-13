@@ -6,3 +6,9 @@
 # Copyright ⓒ 2014 ARP Networks, Inc.
 #
 # A runit "run" script for abuse_mail_monitor.rb
+
+# Modify INSTALL_DIR as needed
+INSTALL_DIR=/root/tools/
+
+exec 2>&1
+exec $INSTALL_DIR/abuse_mail_monitor.rb
