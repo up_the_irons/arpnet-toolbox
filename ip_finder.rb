@@ -8,13 +8,13 @@ class IpFinder
     return nil if body.to_s.empty?
 
     body.each_line do |line|
-      if line =~ /(#{token})\s+([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)/i
+      if line =~ /(#{token})\s*([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)/i
         return $2 if valid_ip?($2)
       end
 
       # Very rough IPv6 match, but valid_ip?() below will take care of the
       # rest
-      if line =~ /(#{token})\s+([0-9a-fA-F:]+)/i
+      if line =~ /(#{token})\s*([0-9a-fA-F:]+)/i
         return $2 if valid_ip?($2)
       end
     end

@@ -108,6 +108,34 @@ describe IpFinder do
         end
       end
     end
+
+    context "with SpamCop subject line" do
+      before do
+        @token = "SpamCop \\("
+      end
+
+      context "IPv4" do
+        before do
+          @ip = "192.168.1.10"
+          @pattern = "[SpamCop (#{@ip}) id:1234567890]"
+        end
+
+        it "should return IP" do
+          expect(@ip_finder.find(@pattern, @token)).to eq(@ip)
+        end
+      end
+
+      context "IPv6" do
+        before do
+          @ip = "fda4:7d0:d9cd::3fc1"
+          @pattern = "[SpamCop (#{@ip}) id:1234567890]"
+        end
+
+        it "should return IP" do
+          expect(@ip_finder.find(@pattern, @token)).to eq(@ip)
+        end
+      end
+    end
   end
 
   context "without valid IP" do
