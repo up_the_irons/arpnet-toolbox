@@ -34,7 +34,8 @@ monitor.go do |msg|
   begin
     @ip = IpFinder.new.find(msg.body.to_s) ||
           IpFinder.new.find(msg.subject, 'server used for an attack:') ||
-          IpFinder.new.find(msg.subject, 'service used for an attack:')
+          IpFinder.new.find(msg.subject, 'service used for an attack:') ||
+          IpFinder.new.find(msg.subject, 'SpamCop \(')
 
     @to = CONFIG[:to].call(@ip)
 
