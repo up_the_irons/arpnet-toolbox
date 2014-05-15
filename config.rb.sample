@@ -28,6 +28,8 @@ CONFIG = {
                                  'Attacks::NTPAmplification'),
     MailClassifier::ByString.new('Exploitable chargen service used for an attack:',
                                  'Attacks::ChargenAmplification'),
+    MailClassifier::ByString.new('SpamCop',
+                                 'SPAM'),
     MailClassifier::ByToken.new(%w(
       #SPAM
       #DMCATakedown
