@@ -11,4 +11,4 @@
 INSTALL_DIR=/root/tools/
 
 exec 2>&1
-exec ruby $INSTALL_DIR/abuse_mail_monitor.rb
+exec chpst -e env ruby $INSTALL_DIR/abuse_mail_monitor.rb
