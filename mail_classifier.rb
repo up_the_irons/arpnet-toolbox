@@ -128,6 +128,9 @@ module MailClassifier
 
       class SMTPAmplification < Base
       end
+
+      class OpenResolver < Base
+      end
     end
   end
 end
