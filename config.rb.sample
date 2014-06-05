@@ -32,6 +32,8 @@ CONFIG = {
                                  'Attacks::OpenResolver'),
     MailClassifier::ByString.new('SpamCop',
                                  'SPAM'),
+    MailClassifier::ByString.new('Notice of Claimed Infringement',
+                                 'DMCATakedown'),
     MailClassifier::ByToken.new(%w(
       #SPAM
       #DMCATakedown
