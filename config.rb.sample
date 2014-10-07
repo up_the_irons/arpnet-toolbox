@@ -34,6 +34,8 @@ CONFIG = {
                                  'SPAM'),
     MailClassifier::ByString.new('Notice of Claimed Infringement',
                                  'DMCATakedown'),
+    MailClassifier::ByString.new('Mass bruteforce attempts from your network:',
+                                 'Attacks::BruteForce'),
     MailClassifier::ByToken.new(%w(
       #SPAM
       #DMCATakedown

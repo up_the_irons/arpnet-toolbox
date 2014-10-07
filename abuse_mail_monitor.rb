@@ -36,7 +36,8 @@ monitor.go do |msg|
           IpFinder.new.find(msg.subject, 'server used for an attack:') ||
           IpFinder.new.find(msg.subject, 'service used for an attack:') ||
           IpFinder.new.find(msg.subject, 'SpamCop \(') ||
-          IpFinder.new.find(msg.subject, 'Notice of Claimed Infringement from ')
+          IpFinder.new.find(msg.subject, 'Notice of Claimed Infringement from ') ||
+          IpFinder.new.find(msg.subject, 'Mass bruteforce attempts from your network: IP ')
 
     @to = CONFIG[:to].call(@ip)
 

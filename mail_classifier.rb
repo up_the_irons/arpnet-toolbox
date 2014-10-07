@@ -131,6 +131,10 @@ module MailClassifier
 
       class OpenResolver < Base
       end
+
+      # Generic brute force hacking
+      class BruteForce < Base
+      end
     end
   end
 end
