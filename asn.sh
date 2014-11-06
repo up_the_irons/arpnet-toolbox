@@ -18,7 +18,8 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-ASN=$1
+# Sanitize the input, stripping any "AS" off the front of the string
+ASN=${1##AS}
 
 if [ ! -d $CACHE_DIR ]; then
   mkdir -p $CACHE_DIR
