@@ -19,3 +19,6 @@ doc/
 
 .rvmrc
 config.rb
+
+.ruby-gemset
+.ruby-version
