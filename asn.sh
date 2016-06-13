@@ -18,8 +18,28 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-# Sanitize the input, stripping any "AS" off the front of the string
-ASN=${1##AS}
+# Sanitize the input, stripping any "AS" or "as" off the front of the string
+# TWO stores the first two characters of the input sting
+# SIZE stores the length of the input string
+
+TWO=$(echo "$1" | cut -b 1,2)
+SIZE=${#1}
+
+if [ "$TWO" = "AS" ] || [ "$TWO" = "as" ] ; then
+  ASN=$(echo "$1" | cut -b 3-$SIZE)
+else
+  ASN=${1##AS}
+fi
+
+# Ensure that once the leading "AS" or "as" has been removed, no letters still exist
+# NUM stores the numeric portion of the input string, after AS and as have been removed
+NUM=$(echo "$1" | sed "s/[^0-9]*//g")
+
+if [ "$ASN" != "$NUM" ]; then
+  usage
+  exit 1
+fi
+
 
 if [ ! -d $CACHE_DIR ]; then
   mkdir -p $CACHE_DIR
