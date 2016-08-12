@@ -18,8 +18,8 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-# Sanitize the input, stripping any "AS" off the front of the string
-ASN=${1##AS}
+# Sanitize the input, including only numeric input (removing AS,ASN or other prefixes)
+ASN=$(echo "$1" | sed "s/[^0-9]*//g")
 
 if [ ! -d $CACHE_DIR ]; then
   mkdir -p $CACHE_DIR
